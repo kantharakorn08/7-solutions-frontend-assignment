@@ -15,7 +15,7 @@ const DataTypeCard = ({ typeText, type, dataLists }) => {
   const toDoList = useSelector((state) => state.toDoList);
 
   return (
-    <Card sx={{ minHeight: "800px" }}>
+    <Card sx={{ minHeight: "600px" }}>
       <DataHeader
         sx={{
           textAlign: "center",
