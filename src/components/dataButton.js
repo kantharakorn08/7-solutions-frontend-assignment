@@ -9,25 +9,23 @@ const DataButton = ({
   item,
   action,
   toDoList = null,
-  autoRemove = null,
 }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (action === "remove") {
       let removeTimer = setTimeout(() => {
-        dispatch(onButtonClick(dataLists, item, action, toDoList));
-      }, 100);
-
-      return () => {
-        clearTimeout(removeTimer);
-      };
+        dispatch(onButtonClick(dataLists, item, action, toDoList, true));
+        return () => {
+          clearTimeout(removeTimer);
+        };
+      }, 5000);
     }
   }, []);
   return (
     <Button
       sx={{ width: "100%", textTransform: "none" }}
-      variant="contained"
+      variant="outlined"
       onClick={() => dispatch(onButtonClick(dataLists, item, action, toDoList))}
     >
       {_.get(item, "name")}

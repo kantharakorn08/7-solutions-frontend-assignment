@@ -4,16 +4,15 @@ import {
   removeFruit,
   removeVegetable,
   setDataLists,
+  addDataLists,
 } from ".";
 import _ from "lodash";
 import { dataSet } from "../../../constants";
 
 export const onButtonClick =
-  (dataLists, value, action, toDoList = null) =>
+  (dataLists, value, action, toDoList = null, isAuto = false) =>
   (dispatch) => {
     const type = _.get(value, "type");
-    const typeState =
-      _.get(value, "type") === "Fruit" ? "fruits" : "vegetables";
     if (action === "add") {
       const newDataLists = _.filter(dataLists, (item) => {
         return _.get(item, "name") !== _.get(value, "name");
@@ -27,29 +26,22 @@ export const onButtonClick =
         dispatch(addVegetable({ value }));
       }
     } else {
-      const newDataValue = _.filter(
-        _.get(toDoList, `${typeState}`, []),
-        (item) => {
-          return _.get(item, "name") !== _.get(value, "name");
-        }
-      );
 
       const dataToReturn = _.find(dataSet, (item) => {
         return _.get(item, "name") === _.get(value, "name");
       });
 
-      if (!_.isEmpty(dataToReturn)) {
-        console.log("dataSet", dataSet);
-        console.log("dataToReturn", dataToReturn);
-      }
-      console.log("value", value);
-      console.log("newDataValue", newDataValue);
+      dispatch(addDataLists({ value: dataToReturn }));
 
       if (type === "Fruit") {
-        dispatch(removeFruit({ value: newDataValue, dataToReturn }));
+        dispatch(removeFruit({ value }));
       } else {
         //vegetables
-        dispatch(removeVegetable({ value: newDataValue, dataToReturn }));
+        dispatch(
+          removeVegetable({
+            value,
+          })
+        );
       }
     }
   };

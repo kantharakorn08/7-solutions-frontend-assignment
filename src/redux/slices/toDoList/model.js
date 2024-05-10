@@ -3,4 +3,5 @@ export const initialState = {
   dataLists: dataSet,
   fruits: [],
   vegetables: [],
+  jsonData: [],
 };
